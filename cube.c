@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:20:33 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/03/23 22:00:14 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:04:06 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,29 @@ void	player_new_pos(t_m *data)
 {
     if (mlx_is_key_down(data->mlx, MLX_KEY_W))
     {
-        data->player.x = data->player.x + cos(data->player.direction) * 3;
-        data->player.y = data->player.y + sin(data->player.direction) * 3;
+        data->player.x = data->player.x + cos(data->player.direction) * MOV_SPEED;
+        data->player.y = data->player.y + sin(data->player.direction) * MOV_SPEED;
 		update(data);
     }
 
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_S))
     {
-        data->player.x = data->player.x - cos(data->player.direction) * 3;
-        data->player.y = data->player.y - sin(data->player.direction) * 3;
+        data->player.x = data->player.x - cos(data->player.direction) * MOV_SPEED;
+        data->player.y = data->player.y - sin(data->player.direction) * MOV_SPEED;
 		update(data);
     }
 
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_A))
     {
-        data->player.x = data->player.x - cos(data->player.direction + M_PI_2) * 3;
-        data->player.y = data->player.y - sin(data->player.direction  + M_PI_2) * 3;
+        data->player.x = data->player.x - cos(data->player.direction + M_PI_2) * MOV_SPEED;
+        data->player.y = data->player.y - sin(data->player.direction  + M_PI_2) * MOV_SPEED;
 		update(data);
     }
 
 	else if (mlx_is_key_down(data->mlx, MLX_KEY_D))
     {
-        data->player.x = data->player.x + cos(data->player.direction + M_PI_2) * 3;
-        data->player.y = data->player.y + sin(data->player.direction  + M_PI_2) * 3;
+        data->player.x = data->player.x + cos(data->player.direction + M_PI_2) * MOV_SPEED;
+        data->player.y = data->player.y + sin(data->player.direction  + M_PI_2) * MOV_SPEED;
 		update(data);
     }
 }
@@ -197,7 +197,7 @@ void	draw_map(void *param)
 		iter.i++;
 	}
 	draw_player(data);
-	DDA(data);
+	shot_rays(data);
 }
 
 int main(void)

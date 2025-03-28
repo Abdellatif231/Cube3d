@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:27:59 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/03/23 21:57:48 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:04:20 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define HEIGHT 270
 #define TILE_SIZE 30
 #define ROTATION_SPEED 0.05
+#define	MOV_SPEED 2
 
 typedef struct s_point
 {
@@ -59,3 +60,4 @@ void DDA(t_m *data);
 void    draw_map(void *param);
 void    ft_put_pixel(mlx_image_t *image, int x, int y, int color);
 void    update(t_m *data);
+void    shot_rays(t_m *data);
