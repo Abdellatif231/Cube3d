@@ -1,119 +1,44 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include "MLX42/MLX42.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/03 14:44:42 by amaaouni          #+#    #+#             */
+/*   Updated: 2025/04/03 14:45:13 by amaaouni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define WIDTH 750
-#define HEIGHT 500
-#define TILE_SIZE 30
+#include "cube.h"
 
-typedef struct sok
+int	main(void)
 {
-	mlx_image_t* image;
-	char **map;
-} m_t;
+	t_m	data;
 
-typedef struct s_point
-{
-	float x;
-	float y;
-}	t_point;
-
-int get_w(char **map)
-{
-	int i = 0;
-	while (map[i])
-		i++;
-	return i;
+	data.map = malloc(sizeof(char *) * 10);
+	data.map[0] = strdup("1111111111111111111111111");
+	data.map[1] = strdup("1000000000000000000100001");
+	data.map[2] = strdup("10011111S0000000000000001");
+	data.map[3] = strdup("1001000100000000001000001");
+	data.map[4] = strdup("1001000010000000001000001");
+	data.map[5] = strdup("1001000000100000001000001");
+	data.map[6] = strdup("1001000000100000001000001");
+	data.map[7] = strdup("1001000000001000001000001");
+	data.map[8] = strdup("1111111111111111111111111");
+	data.map[9] = NULL;
+	data.mlx = mlx_init(WIDTH, HEIGHT, "cube3d", true);
+	if (!data.mlx)
+		return (1);
+	data.image = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+	if (!data.image)
+		return (1);
+	if (mlx_image_to_window(data.mlx, data.image, 0, 0) == -1)
+		return (1);
+	player_init(&data);
+	mlx_loop_hook(data.mlx, draw_map, &data);
+	mlx_loop_hook(data.mlx, ft_hook, &data);
+	mlx_loop(data.mlx);
+	mlx_terminate(data.mlx);
+	return (1);
 }
-
-int get_h(char **map)
-{
-    int i = 0;
-    while (map[0][i])
-        i++;
-    return i;
-}
-
-
-void ft_randomize(void *param)
-{
-    m_t *mok = param;
-    int w = get_w(mok->map);
-    int h = get_h(mok->map);
-
-    for (int i = 0; i < w; i++)
-    {
-        for (int j = 0; j < h; j++)
-        {
-            uint32_t color;
-            if (mok->map[i][j] == '1')
-                color = 0x00;
-			else
-                color = 0x000000FF;
-            for (int x = 0; x < TILE_SIZE; x++)
-            {
-                for (int y = 0; y < TILE_SIZE; y++)
-                {
-					mlx_put_pixel(mok->image, (j * TILE_SIZE) + x, (i * TILE_SIZE) + y, color);
-                }
-            }
-        }
-    }
-}
-
-void ft_hook(void* param)
-{
-	mlx_t* mlx = param;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-}
-
-
-int32_t main(void)
-{
-	mlx_t* mlx;
-	m_t waa3;
-	char **map2d;
-
-	map2d = calloc(10, sizeof(char *));
-	map2d[0] = strdup("1111111111111111111111111");
-	map2d[1] = strdup("1000000000000000000100001");
-	map2d[2] = strdup("1001000000000P00000000001");
-	map2d[3] = strdup("1001000000000000001000001");
-	map2d[4] = strdup("1001000000000000001000001");
-	map2d[5] = strdup("1001000000100000001000001");
-	map2d[6] = strdup("1001000000000000001000001");
-	map2d[7] = strdup("1001000000001000001000001");
-	map2d[8] = strdup("1111111111111111111111111");
-	map2d[9] = NULL;
-
-	waa3.map = map2d;
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(waa3.image = mlx_new_image(mlx, WIDTH, HEIGHT)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, waa3.image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-
-	mlx_loop_hook(mlx, ft_randomize, &waa3);
-	mlx_loop_hook(mlx, ft_hook, mlx);
-
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
-	return (EXIT_SUCCESS);
-}
-

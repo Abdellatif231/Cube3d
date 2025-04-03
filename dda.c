@@ -6,54 +6,79 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:45:17 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/03/27 18:27:19 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:54:58 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int abs(int n) { return ((n > 0) ? n : (n * (-1))); }
-
-void DDA(t_m *data)
+int	abs(int n)
 {
-	int X0 = data->player.x;
-	int Y0 = data->player.y;
-	int X1 = X0 + cos(data->player.angle) * 90;
-	int Y1 = Y0 + sin(data->player.angle) * 90;
+	if (n > 0)
+		return (n);
+	return (n * (-1));
+}
 
-	int dx = X1 - X0;
-	int dy = Y1 - Y0;
+void	dda(t_m *data, float hit_x, float hit_y)
+{
+	float	x;
+	float	y;
+	int		dx;
+	int		dy;
+	int		steps;
+	float	xinc;
+	float	yinc;
+	int		i;
 
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-
-	float Xinc = dx / (float)steps;
-	float Yinc = dy / (float)steps;
-
-	float X = X0;
-	float Y = Y0;
-	int i = 0; 
-	while (i <= steps) 
+	dx = (int)hit_x - (int)data->player.x;
+	dy = (int)hit_y - (int)data->player.y;
+	if (abs(dx) > abs(dy))
+		steps = abs(dx);
+	else
+		steps = abs(dy);
+	xinc = dx / (float)steps;
+	yinc = dy / (float)steps;
+	x = data->player.x;
+	y = data->player.y;
+	i = 0;
+	while (i <= steps)
 	{
-		ft_put_pixel(data->image, X, Y, 0xFF0000FF);
-		X += Xinc;
-		Y += Yinc;
+		ft_put_pixel(data->image, x, y, 0xFF0000FF);
+		x += xinc;
+		y += yinc;
 		i++;
 	}
 }
 
 void	shot_rays(t_m *data)
 {
-	int		num_rays = WIDTH;
-    float	fov = M_PI / 3;
-    float	start_angle = data->player.direction - (fov / 2);
-    float	angle_step = fov / num_rays;
-	data->player.angle = start_angle;
-	int i = 0;
+	t_ray	ray;
+	int		num_rays;
+	float	fov;
+	float	start_angle;
+	float	angle_step;
+	int		i;
+
+	num_rays = WIDTH;
+	fov = M_PI / 3;
+	start_angle = data->player.direction - (fov / 2);
+	angle_step = fov / num_rays;
+	ray.angle = start_angle;
+	i = 0;
 	while (i <= num_rays)
 	{
-		DDA(data);
-		data->player.angle = start_angle + (i * angle_step);
+		// get hit_x & hit_y by checking intersections
+		// TO DO
+		/* 
+		  get_hit_point() {
+		   check_horizantel();
+		   check_vertical();
+		   } 
+		*/
+		ray.hit_x = data->player.x + cos(ray.angle) * WIDTH;
+		ray.hit_y = data->player.y + sin(ray.angle) * WIDTH;
+		dda(data, ray.hit_x, ray.hit_y);
+		ray.angle += angle_step;
 		i++;
 	}
-
 }
