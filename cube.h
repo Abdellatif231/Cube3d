@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:27:59 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/03 15:55:06 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/03 22:01:56 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,20 @@
 #define ROTATION_SPEED 0.05
 #define	MOV_SPEED 2
 
-typedef struct s_point
+typedef struct s_hit
 {
+	bool	found_wall;
     float	x;
     float	y;
-}			t_point;
+	float	distance;
+}			t_hit;
 
 typedef struct s_player
 {
 	float	x;
 	float	y;
 	double	direction;
+	double	angle;
 }			t_player;
 
 typedef struct s_iter
@@ -68,7 +71,7 @@ typedef struct s_m
 	t_player	player;
 }               t_m;
 
-void	dda(t_m *data, float hit_x, float hit_y);
+void	DDA(t_m *data);
 void    draw_map(void *param);
 void    ft_put_pixel(mlx_image_t *image, int x, int y, int color);
 void    update(t_m *data);

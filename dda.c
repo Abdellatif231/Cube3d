@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:45:17 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/03 15:54:58 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/03 21:37:15 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	shot_rays(t_m *data)
 		   check_vertical();
 		   } 
 		*/
-		ray.hit_x = data->player.x + cos(ray.angle) * WIDTH;
-		ray.hit_y = data->player.y + sin(ray.angle) * WIDTH;
+		ray.hit_x = data->player.x + cos(ray.angle) * 100;
+		ray.hit_y = data->player.y + sin(ray.angle) * 100; 
 		dda(data, ray.hit_x, ray.hit_y);
 		ray.angle += angle_step;
 		i++;
