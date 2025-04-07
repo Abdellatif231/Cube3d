@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:27:59 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 16:44:41 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/07 22:24:26 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 # define TILE_SIZE 32
 # define ROTATION_SPEED 0.05
 # define MOV_SPEED 2
-# define FOV (M_PI / 3)
-# define NUM_RAYS (WIDTH)
+# define NUM_RAYS WIDTH
 # define CEILING_COLOR 0xFF
-# define WALL_COLOR    0xC0C0C0FF
-# define FLOOR_COLOR   0xFF
+# define WALL_COLOR 0xC0C0C0FF
+# define FLOOR_COLOR 0xFF
 
 typedef struct s_point
 {
@@ -50,7 +49,7 @@ typedef struct s_player
 	double		x;
 	double		y;
 	double		direction;
-	double		angle;
+	double		fov;
 }				t_player;
 
 typedef struct s_iter
@@ -61,7 +60,7 @@ typedef struct s_iter
 	int			j;
 	int			w;
 	int			h;
-	int			color;
+	uint32_t	color;
 }				t_iter;
 
 typedef struct s_ray
@@ -79,7 +78,7 @@ typedef struct s_m
 	mlx_image_t	*image;
 	char		**map;
 	t_player	player;
-	int			color;
+	uint32_t	color;
 }				t_m;
 
 void			DDA(t_m *data);
@@ -103,5 +102,6 @@ int				ft_strlen(char *s);
 double			normalize_angle(double angle);
 bool			has_wall_at(char **map, double x, double y);
 uint32_t		darken_color(uint32_t color, float factor);
+double			calc_dis(double p_x, double p_y, double x, double y);
 
 #endif

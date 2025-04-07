@@ -1,7 +1,7 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 MLXFLAGS = -ldl -lglfw -lm -lpthread -LMLX42/build -lmlx42 -IMLX42/include
-CFILES = main.c player.c map.c utils.c dda.c cube.c 
+CFILES = raycasting/main.c raycasting/player.c raycasting/map.c raycasting/utils.c raycasting/rays.c raycasting/raycaster.c 
 OFILES = $(CFILES:.c=.o)
 NAME = cube
 
