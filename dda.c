@@ -6,11 +6,21 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:45:17 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/03 21:37:15 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/07 15:47:06 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+bool has_wall_at(char **map, double x, double y)
+{
+    int map_x = x / TILE_SIZE;
+    int map_y = y / TILE_SIZE;
+
+    if (in_map(map, map_y, map_x))
+        return (map[map_y][map_x] == '1');
+    return false;
+}
 
 int	abs(int n)
 {
@@ -50,35 +60,65 @@ void	dda(t_m *data, float hit_x, float hit_y)
 	}
 }
 
+uint32_t darken_color(uint32_t color, float factor)
+{
+	uint8_t r = (color >> 24) & 0xFF;
+	uint8_t g = (color >> 16) & 0xFF;
+	uint8_t b = (color >> 8) & 0xFF;
+	uint8_t a = color & 0xFF;
+
+	r = (uint8_t)(r * factor);
+	g = (uint8_t)(g * factor);
+	b = (uint8_t)(b * factor);
+
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+
 void	shot_rays(t_m *data)
 {
 	t_ray	ray;
-	int		num_rays;
-	float	fov;
+	t_hit	hit;
 	float	start_angle;
 	float	angle_step;
-	int		i;
 
-	num_rays = WIDTH;
-	fov = M_PI / 3;
-	start_angle = data->player.direction - (fov / 2);
-	angle_step = fov / num_rays;
+	start_angle = normalize_angle(data->player.direction - (FOV / 2));
+	angle_step = FOV / NUM_RAYS;
 	ray.angle = start_angle;
-	i = 0;
-	while (i <= num_rays)
+	ray.index = 0;
+	while (ray.index < NUM_RAYS)
 	{
-		// get hit_x & hit_y by checking intersections
-		// TO DO
-		/* 
-		  get_hit_point() {
-		   check_horizantel();
-		   check_vertical();
-		   } 
-		*/
-		ray.hit_x = data->player.x + cos(ray.angle) * 100;
-		ray.hit_y = data->player.y + sin(ray.angle) * 100; 
-		dda(data, ray.hit_x, ray.hit_y);
+		ray.angle = normalize_angle(ray.angle);
+		hit = cast_ray(data, ray.angle);
+//		dda(data, hit.x, hit.y);
+		ray.distance = hit.distance * cos(normalize_angle(data->player.direction - ray.angle));
+		render_walls(data, ray);
 		ray.angle += angle_step;
-		i++;
+		ray.index++;
+	}
+}
+
+void	render_walls(t_m *data, t_ray ray)
+{
+	double	proj_plane;
+	int		wall_height;
+	int		wall_top;
+	int		wall_bottom;
+	int		y;
+
+	proj_plane = (WIDTH / 2) / tan(FOV / 2);
+	wall_height = (TILE_SIZE / ray.distance) * proj_plane;
+    wall_top = (HEIGHT / 2) - (wall_height / 2);
+    wall_bottom = (HEIGHT / 2) + (wall_height / 2);
+	y = 0;
+	while (y < HEIGHT)
+	{
+		if (y < wall_top)
+			ft_put_pixel(data->image, ray.index, y , CEILING_COLOR);
+		else if (y >= wall_top && y <= wall_bottom)
+			ft_put_pixel(data->image, ray.index, y, data->color);
+		else
+			ft_put_pixel(data->image, ray.index, y, FLOOR_COLOR);
+		y++;
 	}
 }
