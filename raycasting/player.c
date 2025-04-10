@@ -6,11 +6,11 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:45:34 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 22:23:27 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:51:49 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "../g_header.h"
 
 void	player_pos(t_m *data, t_iter iter)
 {
@@ -36,10 +36,11 @@ void	player_init(t_m *data)
 	while (iter.i < iter.h)
 	{
 		iter.j = 0;
-		while (iter.j < ft_strlen(data->map[iter.i]))
+		while (iter.j < my_strlen(data->map[iter.i]))
 		{
 			if (data->map[iter.i][iter.j] != '1'
-				&& data->map[iter.i][iter.j] != '0')
+				&& data->map[iter.i][iter.j] != '0'
+				&& data->map[iter.i][iter.j] != '\n')
 			{
 				player_pos(data, iter);
 				return ;

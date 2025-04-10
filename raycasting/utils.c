@@ -6,13 +6,13 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:47:24 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 22:24:01 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:08:55 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "../g_header.h"
 
-int	ft_strlen(char *s)
+int	my_strlen(char *s)
 {
 	int	i;
 

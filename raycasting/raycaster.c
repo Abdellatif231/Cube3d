@@ -6,11 +6,11 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:20:33 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 22:23:42 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/09 15:27:44 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "../g_header.h"
 
 bool	inter_found(t_m *data, t_hit *hit, t_point next)
 {
@@ -32,6 +32,7 @@ void	init_hit(t_hit *hit)
 	hit->y = 0;
 	hit->distance = 0;
 	hit->found_wall = false;
+	hit->v_hit = false;
 }
 
 t_hit	h_inter(t_m *data, double ray_angle)
@@ -101,9 +102,11 @@ t_hit	cast_ray(t_m *data, double ray_angle)
 		ver_hit.distance = 800.0;
 	if (hor_hit.distance < ver_hit.distance)
 	{
+		hor_hit.is_ver = false;
 		data->color = darken_color(WALL_COLOR, 0.9f);
 		return (hor_hit);
 	}
 	data->color = WALL_COLOR;
+	ver_hit.is_ver = true;
 	return (ver_hit);
 }

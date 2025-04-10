@@ -6,11 +6,11 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:45:17 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 22:23:52 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:02:16 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "../g_header.h"
 
 int	abs(int n)
 {

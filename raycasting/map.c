@@ -6,15 +6,15 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:46:25 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/07 22:23:18 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/08 14:01:39 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cube.h"
+#include "../g_header.h"
 
 bool	in_map(char **map, int y, int x)
 {
-	if (y < 0 || x < 0 || y >= get_height(map) || x >= ft_strlen(map[y]))
+	if (y < 0 || x < 0 || y >= get_height(map) || x >= my_strlen(map[y]))
 		return (false);
 	return (true);
 }
@@ -51,7 +51,7 @@ void	draw_map(void *param)
 	while (iter.i < iter.h)
 	{
 		iter.j = 0;
-		while (iter.j < ft_strlen(data->map[iter.i]))
+		while (iter.j < my_strlen(data->map[iter.i]))
 		{
 			if (data->map[iter.i][iter.j] == '1')
 				iter.color = 0xFFFFFFFF;
