@@ -14,7 +14,7 @@ $(LIBFT):
 $(NAME): $(OFILES)
 	$(CC) $(CFLAGS) $(OFILES) ./libft/$(LIBFT) $(MLXFLAGS) -o $(NAME)
 
-%.o: %.c g_header.h
+%.o: %.c g_header.h 
 	$(CC) $(CFLAGS) -IMLX42/include -c $< -o $@ 
 
 clean:

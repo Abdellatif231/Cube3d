@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:27:59 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/09 15:28:05 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:59:13 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 # define ROTATION_SPEED 0.05
 # define MOV_SPEED 2
 # define NUM_RAYS WIDTH
-# define CEILING_COLOR 0xFF
+# define CEILING_COLOR 0xFFFFFF
 # define WALL_COLOR 0xC0C0C0FF
-# define FLOOR_COLOR 0xFF
+# define FLOOR_COLOR 0xFFFF00
 
 typedef struct s_data	t_data;
 
@@ -75,11 +75,27 @@ typedef struct s_ray
 	bool				is_ver;
 }						t_ray;
 
+typedef struct s_tex
+{
+    mlx_texture_t       *north;
+    mlx_texture_t       *south;
+    mlx_texture_t       *east;
+    mlx_texture_t       *west;
+}						t_tex;
+
+typedef struct s_wall
+{
+	int height;
+	int top;
+	int bottom;
+}		t_wall;
+
 typedef struct s_m
 {
+	char				**map;
 	mlx_t				*mlx;
 	mlx_image_t			*image;
-	char				**map;
+	t_tex				texture;
 	t_player			player;
 	uint32_t			color;
 }						t_m;

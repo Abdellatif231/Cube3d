@@ -6,7 +6,7 @@
 /*   By: abdennac <abdennac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:32:37 by abdennac          #+#    #+#             */
-/*   Updated: 2025/04/08 14:28:05 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/10 11:25:41 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void		parse(t_data *data, int ac, char **av);
 void		fill_map(t_data *data, char *name);
 void		parse_map(t_data *data);
 int			get_map_line_count(char **tmp);
-
-/***************  Utils  ***************/
-
 int			count(char *arr, char c);
 int			ft_strlen2(char **str);
 void		ft_free(char **ptr);

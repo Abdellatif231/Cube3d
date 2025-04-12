@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:20:33 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/09 15:27:44 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:14:57 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_hit(t_hit *hit)
 	hit->y = 0;
 	hit->distance = 0;
 	hit->found_wall = false;
-	hit->v_hit = false;
+	hit->is_ver = false;
 }
 
 t_hit	h_inter(t_m *data, double ray_angle)
