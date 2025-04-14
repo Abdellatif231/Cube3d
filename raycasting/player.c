@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 14:45:34 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/08 13:51:49 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:35:10 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,24 @@ bool	key_down(t_m *data, t_point *next)
 
 bool	player_new_pos(t_m *data)
 {
-	t_point	next;
 	t_point	tmp;
-	int		map_x;
-	int		map_y;
+	t_point	next;
+	t_cols	cols;
 
-	next.x = data->player.x;
-	next.y = data->player.y;
 	if (!key_down(data, &tmp))
 		return (false);
 	next.x = data->player.x + tmp.x * MOV_SPEED;
 	next.y = data->player.y + tmp.y * MOV_SPEED;
-	map_x = next.x / TILE_SIZE;
-	map_y = next.y / TILE_SIZE;
-	if (!in_map(data->map, map_y, map_x))
+	cols.map_x = (int)(next.x / TILE_SIZE);
+	cols.map_y = (int)(next.y / TILE_SIZE);
+	cols.h_free = data->map[(int)(data->player.y
+			/ TILE_SIZE)][cols.map_x] != '1';
+	cols.v_free = data->map[cols.map_y][(int)(data->player.x
+			/ TILE_SIZE)] != '1';
+	cols.d_free = data->map[cols.map_y][cols.map_x] != '1';
+	if (!in_map(data->map, cols.map_y, cols.map_x))
 		return (false);
-	if (data->map[map_y][map_x] != '1')
+	if (cols.h_free && cols.v_free && cols.d_free)
 	{
 		data->player.x = next.x;
 		data->player.y = next.y;

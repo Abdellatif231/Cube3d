@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 17:45:17 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/12 14:01:24 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:47:10 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,55 +94,5 @@ void	shot_rays(t_m *data)
 		render_walls(data, ray);
 		ray.angle += angle_step;
 		ray.index++;
-	}
-}
-
-void	render_walls(t_m *data, t_ray ray)
-{
-	t_wall			wall;
-	double			proj_plane;
-	int				y;
-	int				x_offset;
-	int				y_offset;
-	mlx_texture_t	*text;
-	uint8_t			*pixel;
-
-	proj_plane = (WIDTH / 2) / tan(data->player.fov / 2);
-	wall.height = (TILE_SIZE / ray.distance) * proj_plane;
-	wall.top = (HEIGHT / 2) - (wall.height / 2);
-	wall.bottom = (HEIGHT / 2) + (wall.height / 2);
-
-	if (ray.is_ver)
-	{
-		x_offset = (int)ray.hit_y % TILE_SIZE;
-		if (cos(ray.angle) < 0)
-            text = data->texture.west;
-        else
-            text = data->texture.east;
-	}
-	else
-	{
-		x_offset = (int)ray.hit_x % TILE_SIZE;
-	    if (sin(ray.angle) > 0)
-            text = data->texture.north;
-        else
-            text = data->texture.south;
-	}
-	y = 0;
-	while (y < HEIGHT)
-	{
-		if (y < wall.top)
-			ft_put_pixel(data->image, ray.index, y, CEILING_COLOR);
-		else if (y >= wall.top && y < wall.bottom)
-		{
-			y_offset = (y - wall.top) * ((float)text->height / wall.height);
-		    pixel = &text->pixels[4 * (y_offset * text->width + x_offset)];
-    		data->color = (pixel[0] << 24) | (pixel[1] << 16) | (pixel[2] << 8) | pixel[3];
-		    ft_put_pixel(data->image, ray.index, y, data->color);
-		}
-
-		else
-			ft_put_pixel(data->image, ray.index, y, FLOOR_COLOR);
-		y++;
 	}
 }

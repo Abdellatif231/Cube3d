@@ -6,7 +6,7 @@
 /*   By: amaaouni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 02:27:59 by amaaouni          #+#    #+#             */
-/*   Updated: 2025/04/12 13:59:13 by amaaouni         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:13:31 by amaaouni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ typedef struct s_hit
 	bool				is_ver;
 }						t_hit;
 
+typedef struct s_cols
+{
+	bool				h_free;
+	bool				v_free;
+	bool				d_free;
+	int					map_x;
+	int					map_y;
+}						t_cols;
+
 typedef struct s_player
 {
 	double				x;
@@ -77,18 +86,27 @@ typedef struct s_ray
 
 typedef struct s_tex
 {
-    mlx_texture_t       *north;
-    mlx_texture_t       *south;
-    mlx_texture_t       *east;
-    mlx_texture_t       *west;
+	mlx_texture_t		*north;
+	mlx_texture_t		*south;
+	mlx_texture_t		*east;
+	mlx_texture_t		*west;
 }						t_tex;
 
 typedef struct s_wall
 {
-	int height;
-	int top;
-	int bottom;
-}		t_wall;
+	int					height;
+	int					top;
+	int					bottom;
+}						t_wall;
+
+typedef struct s_texdata
+{
+	int					x_offset;
+	int					y_offset;
+	int					y;
+	mlx_texture_t		*tex;
+	uint8_t				*pixel;
+}						t_texdata;
 
 typedef struct s_m
 {
